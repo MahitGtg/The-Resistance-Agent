@@ -1,0 +1,14 @@
+def update_spy_probs(self, mission, num_betrayals, mission_success):
+    for player in self.other_players:
+        prior = self.spy_probs[player]
+        if player in mission:
+            likelihood = self.calculate_mission_likelihood(player, mission, num_betrayals)
+        else:
+            likelihood = 1.0
+        posterior = prior * likelihood
+        self.spy_probs[player] = posterior
+    # Normalize probabilities
+    total = sum(self.spy_probs.values())
+    if total > 0:
+        for player in self.spy_probs:
+            self.spy_probs[player] /= total
