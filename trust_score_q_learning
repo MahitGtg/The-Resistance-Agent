@@ -1,0 +1,9 @@
+def calculate_trust_scores(self):
+    trust_scores = {}
+    for player in self.other_players:
+        spy_prob = self.spy_probs[player]
+        vote_similarity = self.calculate_vote_similarity(player)
+        mission_success_rate = self.calculate_mission_success_rate(player)
+        trust_score = (1 - spy_prob) * 0.6 + vote_similarity * 0.2 + mission_success_rate * 0.2
+        trust_scores[player] = trust_score
+    return trust_scores
