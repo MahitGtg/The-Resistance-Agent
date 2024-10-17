@@ -1,0 +1,17 @@
+def mcts_propose_mission(self, team_size):
+    time_limit = 0.5
+    end_time = time.time() + time_limit
+    best_team = None
+    best_score = -float('inf')
+
+    candidates = self.generate_candidate_teams(team_size)
+
+    for team in candidates:
+        if time.time() > end_time:
+            break
+        score = self.simulate_team(team, simulations=10)
+        if score > best_score:
+            best_score = score
+            best_team = team
+
+    return best_team if best_team else self.heuristic_propose(team_size)
